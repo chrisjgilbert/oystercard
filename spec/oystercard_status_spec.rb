@@ -2,8 +2,6 @@ require 'oystercard_status'
 
 describe OysterCardStatus do
 
-  it { is_expected.to respond_to(:touch_in) }
-
   let(:oystercard) { double :oystercard, :in_journey => false }
 
   describe '#initialize' do
