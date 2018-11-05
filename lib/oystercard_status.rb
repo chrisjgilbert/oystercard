@@ -10,7 +10,7 @@ class OysterCardStatus
   end
 
   def touch_in(balance)
-    fail 'You dont have suffient balance to touch in' if balance < @min_fare
+    insufficient_funds?(balance)
     @in_journey = true
     self
   end
@@ -22,6 +22,12 @@ class OysterCardStatus
 
   def in_journey?
     @in_journey
+  end
+
+  private
+
+  def insufficient_funds?(balance)
+    fail 'You dont have suffient balance to touch in' if balance < @min_fare
   end
 
 end
