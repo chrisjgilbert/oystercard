@@ -1,3 +1,5 @@
+require 'oystercard_status'
+
 class OysterCard
 
   attr_reader :balance
@@ -7,7 +9,7 @@ class OysterCard
 
   def initialize(default_balance = DEFAULT_BALANCE, max_limit = MAX_LIMIT)
     @balance = default_balance
-    @max_limit =  max_limit
+    @max_limit = max_limit
   end
 
   def top_up(value)
