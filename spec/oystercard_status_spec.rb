@@ -22,7 +22,7 @@ describe OysterCardStatus do
       expect(oystercard_status.in_journey).to eq true
     end
 
-    it 'user is not allowed to touch if there is less than £1 in the balance' do
+    it 'user can"t touch in with less than £1 in balance' do
       message = 'You dont have suffient balance to touch in'
       expect { oystercard_status.touch_in(0) }.to raise_error message
     end
