@@ -2,6 +2,12 @@ require 'oystercard'
 
 describe OysterCard do
 
+  describe '#initialize' do
+    it 'has a card status by default' do
+      expect(subject.card_status).to be_a_kind_of OysterCardStatus
+    end
+  end
+
   describe '#balance' do
     it 'returns the user balance' do
       expect(subject.balance).to eq 0
@@ -24,6 +30,7 @@ describe OysterCard do
       subject.top_up(90)
       expect { subject.top_up(5) }.to raise_error "Your balance is currently #{subject.balance} and your limit is #{OysterCard::MAX_LIMIT}"
     end
+  end
 
     describe '#deduct' do
       it ' Allows a fair to be deducted from the card' do
@@ -38,6 +45,4 @@ describe OysterCard do
       end
 
     end
-  end
-
 end

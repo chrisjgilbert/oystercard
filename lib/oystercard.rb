@@ -1,15 +1,16 @@
-require 'oystercard_status'
+require_relative 'oystercard_status'
 
 class OysterCard
 
-  attr_reader :balance
+  attr_reader :balance, :card_status
 
   DEFAULT_BALANCE = 0
   MAX_LIMIT = 90
 
-  def initialize(default_balance = DEFAULT_BALANCE, max_limit = MAX_LIMIT)
+  def initialize(default_balance = DEFAULT_BALANCE, max_limit = MAX_LIMIT, card_status = OysterCardStatus.new)
     @balance = default_balance
     @max_limit = max_limit
+    @card_status = card_status
   end
 
   def top_up(value)
