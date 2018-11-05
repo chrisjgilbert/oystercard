@@ -8,11 +8,9 @@ describe OysterCard do
     it 'returns the user balance' do
       expect(oystercard.balance).to eq 0
     end
+  end
 
-    it 'allows the user to top up their balance' do
-      expect(oystercard.top_up(5)).to eq 5
-    end
-
+  describe '#top_up' do
     it 'Adds the top up value to the balance' do
       expect { oystercard.top_up(3) }.to change{ oystercard.balance}.by 3
     end
@@ -29,10 +27,11 @@ describe OysterCard do
     end
   end
 
-    describe '#deduct' do
-      it 'allows a fare to be deducted from the balance' do
-        oystercard.top_up(10)
-        expect { oystercard.deduct(3) }.to change{ oystercard.balance }.by -3
-      end
+  describe '#deduct' do
+    it 'allows a fare to be deducted from the balance' do
+      oystercard.top_up(10)
+      expect { oystercard.deduct(3) }.to change{ oystercard.balance }.by -3
     end
+  end
+  
 end
