@@ -2,7 +2,7 @@ require_relative 'oystercard_status'
 
 class OysterCard
 
-  attr_reader :balance, :card_status
+  attr_reader :balance, :card_status, :max_limit
 
   DEFAULT_BALANCE = 0
   MAX_LIMIT = 90

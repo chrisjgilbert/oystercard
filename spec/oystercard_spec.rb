@@ -4,9 +4,13 @@ describe OysterCard do
 
   let(:oystercard) { described_class.new }
 
-  describe '#balance' do
-    it 'returns the user balance' do
-      expect(oystercard.balance).to eq 0
+  describe '#initialize' do
+    it 'sets a default max limit' do
+      expect(oystercard.max_limit).to eq OysterCard::MAX_LIMIT
+    end
+    
+    it 'sets the user balance as 0 by default' do
+      expect(oystercard.balance).to eq OysterCard::DEFAULT_BALANCE
     end
   end
 
@@ -33,5 +37,5 @@ describe OysterCard do
       expect { oystercard.deduct(3) }.to change{ oystercard.balance }.by -3
     end
   end
-  
+
 end
