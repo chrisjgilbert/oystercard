@@ -12,6 +12,10 @@ describe OysterCard do
     it 'sets the user balance as 0 by default' do
       expect(oystercard.balance).to eq OysterCard::DEFAULT_BALANCE
     end
+
+    it 'sets the users in_journey status to false by default' do
+      expect(oystercard.in_journey).to be false
+    end
   end
 
   describe '#top_up' do
@@ -38,16 +42,18 @@ describe OysterCard do
     end
   end
 
-  describe '#in_journey?' do
-    it 'allows users to get the in_journey status of each oystercard' do
-      expect(oystercard.in_journey?).to eq oystercard.in_journey
+  describe '#touch_in' do
+    it 'sets users in journey status to true' do
+      oystercard.touch_in
+      expect(oystercard.in_journey).to be true
     end
   end
 
-  describe '#touch_in' do
-    it 'allows users to set their in journey status to true' do
+  describe '#touch_out' do
+    it 'sets users in journey status to false' do
       oystercard.touch_in
-      expect(oystercard).to be_in_journey
+      oystercard.touch_out
+      expect(oystercard.in_journey).to be false
     end
   end
 
