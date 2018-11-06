@@ -13,9 +13,6 @@ describe OysterCard do
       expect(oystercard.balance).to eq OysterCard::DEFAULT_BALANCE
     end
 
-    it 'sets in_journey status to false by default' do
-      expect(oystercard.in_journey).to be false
-    end
   end
 
   describe '#top_up' do
@@ -31,7 +28,15 @@ describe OysterCard do
     it 'doesn"t allow the user to top up the balance above the max limit' do
       oystercard.top_up(90)
       message = "Your balance is currently #{oystercard.balance} and your limit is #{oystercard.max_limit}"
-      expect { oystercard.top_up(5) }.to raise_error message
+      expect { oystercard.top_up(1) }.to raise_error message
+    end
+  end
+
+  describe '#in_journey?' do
+    it 'returns the cards in_use status' do
+      oystercard.top_up(1)
+      oystercard.touch_in
+      expect(oystercard.in_journey?).to be true
     end
   end
 
@@ -39,7 +44,7 @@ describe OysterCard do
     it 'sets users in journey status to true' do
       oystercard.top_up(1)
       oystercard.touch_in
-      expect(oystercard.in_journey).to be true
+      expect(oystercard).to be_in_journey
     end
 
     it 'raises an error when a user touches in with less than the minimum fare as their balance' do
@@ -52,7 +57,7 @@ describe OysterCard do
     it 'sets users in journey status to false' do
       oystercard.top_up(1)
       oystercard.touch_out
-      expect(oystercard.in_journey).to be false
+      expect(oystercard).not_to be_in_journey
     end
 
     it 'deducts the minmum fare from the users balance' do

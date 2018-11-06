@@ -10,7 +10,6 @@ class OysterCard
     @balance = default_balance
     @max_limit = max_limit
     @min_fare = min_fare
-    @in_journey = false
   end
 
   def top_up(value)
@@ -18,12 +17,16 @@ class OysterCard
     @balance += value
   end
 
+  def in_journey?
+    @in_use
+  end
+
   def touch_in
-    @in_journey = true unless insufficient_funds?
+    @in_use = true unless insufficient_funds?
   end
 
   def touch_out
-    @in_journey = false
+    @in_use = false
     deduct
   end
 
