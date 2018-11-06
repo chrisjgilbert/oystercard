@@ -1,5 +1,3 @@
-require_relative 'oystercard_status'
-
 class OysterCard
 
   attr_reader :balance, :card_status, :max_limit, :in_journey
