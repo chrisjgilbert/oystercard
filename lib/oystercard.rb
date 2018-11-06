@@ -18,20 +18,20 @@ class OysterCard
     @balance += value
   end
 
-  def deduct(value)
-    @balance -= value
-  end
-
   def touch_in
     @in_journey = true unless insufficient_funds?
   end
 
   def touch_out
     @in_journey = false
-    @balance -= @min_fare
+    deduct
   end
 
   private
+
+  def deduct(value = @min_fare)
+    @balance -= value
+  end
 
   def exceed_max_limit?(value)
     @balance + value > @max_limit

@@ -35,13 +35,6 @@ describe OysterCard do
     end
   end
 
-  describe '#deduct' do
-    it 'allows a fare to be deducted from the balance' do
-      oystercard.top_up(10)
-      expect { oystercard.deduct(3) }.to change{  oystercard.balance}.by -3
-    end
-  end
-
   describe '#touch_in' do
     it 'sets users in journey status to true' do
       oystercard.top_up(1)
