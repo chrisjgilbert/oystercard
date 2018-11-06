@@ -8,7 +8,7 @@ describe OysterCard do
     it 'sets a default max limit' do
       expect(oystercard.max_limit).to eq OysterCard::MAX_LIMIT
     end
-    
+
     it 'sets the user balance as 0 by default' do
       expect(oystercard.balance).to eq OysterCard::DEFAULT_BALANCE
     end
@@ -35,6 +35,19 @@ describe OysterCard do
     it 'allows a fare to be deducted from the balance' do
       oystercard.top_up(10)
       expect { oystercard.deduct(3) }.to change{ oystercard.balance }.by -3
+    end
+  end
+
+  describe '#in_journey?' do
+    it 'allows users to get the in_journey status of each oystercard' do
+      expect(oystercard.in_journey?).to eq oystercard.in_journey
+    end
+  end
+
+  describe '#touch_in' do
+    it 'allows users to set their in journey status to true' do
+      oystercard.touch_in
+      expect(oystercard).to be_in_journey
     end
   end
 
