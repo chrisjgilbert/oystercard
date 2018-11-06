@@ -6,10 +6,12 @@ class OysterCard
 
   DEFAULT_BALANCE = 0
   MAX_LIMIT = 90
+  MIN_FARE = 1
 
-  def initialize(default_balance = DEFAULT_BALANCE, max_limit = MAX_LIMIT)
+  def initialize(default_balance = DEFAULT_BALANCE, max_limit = MAX_LIMIT, min_fare = MIN_FARE)
     @balance = default_balance
     @max_limit = max_limit
+    @min_fare = min_fare
     @in_journey = false
   end
 
@@ -23,7 +25,7 @@ class OysterCard
   end
 
   def touch_in
-    @in_journey = true
+    @in_journey = true unless insufficient_funds?
   end
 
   def touch_out
@@ -34,6 +36,10 @@ class OysterCard
 
   def exceed_max_limit?(value)
     @balance + value > @max_limit
+  end
+
+  def insufficient_funds?
+    fail 'You have insufficient funds to touch in' if @balance < @min_fare
   end
 
 end

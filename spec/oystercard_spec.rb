@@ -44,14 +44,20 @@ describe OysterCard do
 
   describe '#touch_in' do
     it 'sets users in journey status to true' do
+      oystercard.top_up(1)
       oystercard.touch_in
       expect(oystercard.in_journey).to be true
+    end
+
+    it 'raises an error when a user touches in with less than the minimum fare as their balance' do
+      message = 'You have insufficient funds to touch in'
+      expect { oystercard.touch_in }.to raise_error message
     end
   end
 
   describe '#touch_out' do
     it 'sets users in journey status to false' do
-      oystercard.touch_in
+      oystercard.top_up(1)
       oystercard.touch_out
       expect(oystercard.in_journey).to be false
     end
