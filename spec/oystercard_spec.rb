@@ -24,13 +24,13 @@ describe OysterCard do
     end
 
     it 'doesn"t allow the user to top up above card limit (£90)' do
-      message = "Your balance is currently #{oystercard.balance} and your limit is #{OysterCard::MAX_LIMIT}"
+      message = "Your balance is currently #{oystercard.balance} and your limit is #{oystercard.max_limit}"
       expect { oystercard.top_up(95) }.to raise_error message
     end
 
     it 'doesn"t allow the user to top up the balance above the max limit' do
       oystercard.top_up(90)
-      message = "Your balance is currently #{oystercard.balance} and your limit is #{OysterCard::MAX_LIMIT}"
+      message = "Your balance is currently #{oystercard.balance} and your limit is #{oystercard.max_limit}"
       expect { oystercard.top_up(5) }.to raise_error message
     end
   end
@@ -38,7 +38,7 @@ describe OysterCard do
   describe '#deduct' do
     it 'allows a fare to be deducted from the balance' do
       oystercard.top_up(10)
-      expect { oystercard.deduct(3) }.to change{ oystercard.balance }.by -3
+      expect { oystercard.deduct(3) }.to change {  oystercard.balance }.by -3
     end
   end
 
@@ -60,6 +60,10 @@ describe OysterCard do
       oystercard.top_up(1)
       oystercard.touch_out
       expect(oystercard.in_journey).to be false
+    end
+
+    it 'deducts the minmum fare from the users balance' do
+      expect { oystercard.touch_out }.to change { oystercard.balance }.by -oystercard.min_fare
     end
   end
 

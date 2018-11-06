@@ -1,6 +1,6 @@
 class OysterCard
 
-  attr_reader :balance, :card_status, :max_limit, :in_journey
+  attr_reader :balance, :max_limit, :min_fare, :in_journey
 
   DEFAULT_BALANCE = 0
   MAX_LIMIT = 90
@@ -14,7 +14,7 @@ class OysterCard
   end
 
   def top_up(value)
-    fail "Your balance is currently #{@balance} and your limit is #{OysterCard::MAX_LIMIT}" if exceed_max_limit?(value)
+    fail "Your balance is currently #{@balance} and your limit is #{@max_limit}" if exceed_max_limit?(value)
     @balance += value
   end
 
@@ -28,6 +28,7 @@ class OysterCard
 
   def touch_out
     @in_journey = false
+    @balance -= @min_fare
   end
 
   private
