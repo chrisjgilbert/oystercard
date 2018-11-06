@@ -33,7 +33,7 @@ class OysterCard
   private
 
   def exceed_max_limit?(value)
-    (@balance + value) > @max_limit
+    @balance + value > @max_limit
   end
 
 end

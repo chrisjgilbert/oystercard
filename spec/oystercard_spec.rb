@@ -5,15 +5,15 @@ describe OysterCard do
   let(:oystercard) { described_class.new }
 
   describe '#initialize' do
-    it 'sets a default max limit' do
+    it 'sets a default max limit of 1' do
       expect(oystercard.max_limit).to eq OysterCard::MAX_LIMIT
     end
 
-    it 'sets the user balance as 0 by default' do
+    it 'sets a default balance of 0' do
       expect(oystercard.balance).to eq OysterCard::DEFAULT_BALANCE
     end
 
-    it 'sets the users in_journey status to false by default' do
+    it 'sets in_journey status to false by default' do
       expect(oystercard.in_journey).to be false
     end
   end
