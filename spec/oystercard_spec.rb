@@ -26,17 +26,15 @@ describe OysterCard do
     end
 
     it 'doesn"t allow the user to top up the balance above the max limit' do
-      oystercard.top_up(90)
+      oystercard.top_up(oystercard.max_limit)
       message = "Your balance is currently #{oystercard.balance} and your limit is #{oystercard.max_limit}"
       expect { oystercard.top_up(1) }.to raise_error message
     end
   end
 
   describe '#in_journey?' do
-    it 'returns the cards in_use status' do
-      oystercard.top_up(1)
-      oystercard.touch_in
-      expect(oystercard.in_journey?).to be true
+    it 'it is initially not in journey' do
+      expect(oystercard).not_to be_in_journey
     end
   end
 
@@ -56,6 +54,7 @@ describe OysterCard do
   describe '#touch_out' do
     it 'sets users in journey status to false' do
       oystercard.top_up(1)
+      oystercard.touch_in
       oystercard.touch_out
       expect(oystercard).not_to be_in_journey
     end
