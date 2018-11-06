@@ -38,7 +38,7 @@ describe OysterCard do
   describe '#deduct' do
     it 'allows a fare to be deducted from the balance' do
       oystercard.top_up(10)
-      expect { oystercard.deduct(3) }.to change {  oystercard.balance }.by -3
+      expect { oystercard.deduct(3) }.to change{  oystercard.balance}.by -3
     end
   end
 
@@ -63,7 +63,7 @@ describe OysterCard do
     end
 
     it 'deducts the minmum fare from the users balance' do
-      expect { oystercard.touch_out }.to change { oystercard.balance }.by -oystercard.min_fare
+      expect { oystercard.touch_out }.to change{ oystercard.balance}.by -oystercard.min_fare
     end
   end
 
