@@ -22,15 +22,15 @@ class OysterCard
     @entry_station != nil
   end
 
-  def touch_in(entry_station)
-    @entry_station = entry_station unless insufficient_funds?
-    @journey_history << {:touch_in_station => entry_station}
+  def touch_in(station)
+    @entry_station = station unless insufficient_funds?
+    @journey_history << {:entry_station => station}
   end
 
-  def touch_out(exit_station)
+  def touch_out(station)
     deduct
     @entry_station = nil
-    @journey_history << {:touch_out_station => exit_station}
+    @journey_history << {:exit_station => station}
   end
 
   private

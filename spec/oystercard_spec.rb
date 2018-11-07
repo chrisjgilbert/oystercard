@@ -70,7 +70,7 @@ describe OysterCard do
     it 'adds entry station to the journey history' do
       oystercard.top_up(1)
       oystercard.touch_in('Brixton')
-      expect(oystercard.journey_history).to eq [{:touch_in_station => 'Brixton'}]
+      expect(oystercard.journey_history).to eq [{:entry_station => 'Brixton'}]
     end
   end
 
@@ -97,7 +97,7 @@ describe OysterCard do
       oystercard.top_up(5)
       oystercard.touch_in('Brixton')
       oystercard.touch_out('Oxford Circus')
-      expect(oystercard.journey_history).to eq [{:touch_in_station => 'Brixton'}, {:touch_out_station => 'Oxford Circus'}]
+      expect(oystercard.journey_history).to eq [{:entry_station => 'Brixton'}, {:exit_station => 'Oxford Circus'}]
     end
   end
 
