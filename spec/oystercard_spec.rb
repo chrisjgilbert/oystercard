@@ -68,6 +68,13 @@ describe OysterCard do
     it 'deducts the minmum fare from the users balance' do
       expect { oystercard.touch_out }.to change{ oystercard.balance}.by -oystercard.min_fare
     end
+
+    it 'resets the entry station to nil' do
+      oystercard.top_up(5)
+      oystercard.touch_in(station)
+      oystercard.touch_out
+      expect(oystercard.entry_station).to eq nil
+    end
   end
 
 end
