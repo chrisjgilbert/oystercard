@@ -1,6 +1,6 @@
 class OysterCard
 
-  attr_reader :balance, :max_limit, :min_fare, :entry_station
+  attr_reader :balance, :max_limit, :min_fare, :entry_station, :station_history
 
   DEFAULT_BALANCE = 0
   MAX_LIMIT = 90
@@ -10,6 +10,7 @@ class OysterCard
     @balance = default_balance
     @max_limit = max_limit
     @min_fare = min_fare
+    @station_history = []
   end
 
   def top_up(value)
