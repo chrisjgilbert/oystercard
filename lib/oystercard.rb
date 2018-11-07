@@ -1,10 +1,13 @@
-class OysterCard
+require_relative 'station'
+require_relative 'journey'
 
-  attr_reader :balance, :max_limit, :min_fare, :entry_station, :journey_history
+class OysterCard
 
   DEFAULT_BALANCE = 0
   MAX_LIMIT = 90
   MIN_FARE = 1
+
+  attr_reader :balance, :max_limit, :min_fare, :entry_station, :journey_history
 
   def initialize(default_balance = DEFAULT_BALANCE, max_limit = MAX_LIMIT, min_fare = MIN_FARE)
     @balance = default_balance
