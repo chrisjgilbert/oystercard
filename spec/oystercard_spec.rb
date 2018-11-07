@@ -37,6 +37,12 @@ describe OysterCard do
     it 'it is initially not in journey' do
       expect(oystercard).not_to be_in_journey
     end
+
+    it 'returns true when there an entry station has been set' do
+      oystercard.top_up(5)
+      oystercard.touch_in(station)
+      expect(oystercard).to be_in_journey
+    end
   end
 
   describe '#touch_in' do
