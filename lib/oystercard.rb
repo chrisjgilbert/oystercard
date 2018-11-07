@@ -21,8 +21,9 @@ class OysterCard
     @in_journey
   end
 
-  def touch_in
+  def touch_in(entry_station)
     @in_journey = true unless insufficient_funds?
+    @entry_station = entry_station
   end
 
   def touch_out
