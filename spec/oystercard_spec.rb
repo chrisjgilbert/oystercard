@@ -2,8 +2,10 @@ require 'oystercard'
 
 describe OysterCard do
 
-  let(:oystercard) { described_class.new }
-  let(:station)    { double :station }
+  let(:oystercard)    { described_class.new }
+  let(:station)       { double :station }
+  let(:entry_station) { double :entry_station }
+  let(:exit_station)  { double :exit_station}
 
   describe '#initialize' do
     it 'sets a default max limit of 1' do
@@ -65,8 +67,8 @@ describe OysterCard do
 
       it 'adds entry station to the journey history' do
         oystercard.top_up(1)
-        oystercard.touch_in('Brixton')
-        expect(oystercard.journey_history).to eq [{:entry_station => 'Brixton'}]
+        oystercard.touch_in(entry_station)
+        expect(oystercard.journey_history).to eq [{:departure_station => entry_station}]
       end
     end
 
@@ -97,9 +99,9 @@ describe OysterCard do
 
       it 'adds exit station to journey history' do
         oystercard.top_up(5)
-        oystercard.touch_in('Brixton')
-        oystercard.touch_out('Oxford Circus')
-        expect(oystercard.journey_history).to eq [{:entry_station => 'Brixton'}, {:exit_station => 'Oxford Circus'}]
+        oystercard.touch_in(entry_station)
+        oystercard.touch_out(exit_station)
+        expect(oystercard.journey_history).to eq [{:departure_station => entry_station}, {:arrival_station => exit_station}]
       end
     end
 

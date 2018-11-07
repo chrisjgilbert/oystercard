@@ -24,13 +24,13 @@ class OysterCard
 
   def touch_in(station)
     @entry_station = station unless insufficient_funds?
-    @journey_history << {:entry_station => station}
+    save_journey(:departure_station, station)
   end
 
   def touch_out(station)
-    deduct
     @entry_station = nil
-    @journey_history << {:exit_station => station}
+    deduct
+    save_journey(:arrival_station, station)
   end
 
   private
@@ -45,6 +45,10 @@ class OysterCard
 
   def insufficient_funds?
     fail 'You have insufficient funds to touch in' if @balance < min_fare
+  end
+
+  def save_journey(journey_type, station)
+    @journey_history << {journey_type => station}
   end
 
 end
