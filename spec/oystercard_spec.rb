@@ -50,54 +50,63 @@ describe OysterCard do
   end
 
   describe '#touch_in' do
-    it 'sets users in journey status to true' do
-      oystercard.top_up(1)
-      oystercard.touch_in(station)
-      expect(oystercard).to be_in_journey
+    context 'user has topped up above minimum fare' do
+      it 'sets users in journey status to true' do
+        oystercard.top_up(1)
+        oystercard.touch_in(station)
+        expect(oystercard).to be_in_journey
+      end
+
+      it 'remembers the entry station' do
+        oystercard.top_up(1)
+        oystercard.touch_in(station)
+        expect(oystercard.entry_station).to eq station
+      end
+
+      it 'adds entry station to the journey history' do
+        oystercard.top_up(1)
+        oystercard.touch_in('Brixton')
+        expect(oystercard.journey_history).to eq [{:entry_station => 'Brixton'}]
+      end
     end
 
-    it 'raises an error when a user touches in with less than the minimum fare as their balance' do
-      message = 'You have insufficient funds to touch in'
-      expect { oystercard.touch_in(station) }.to raise_error message
+    context 'user has not topped up' do
+      it 'raises an error when a user touches in with less than the minimum fare as their balance' do
+        message = 'You have insufficient funds to touch in'
+        expect { oystercard.touch_in(station) }.to raise_error message
+      end
     end
 
-    it 'remembers the entry station' do
-      oystercard.top_up(1)
-      oystercard.touch_in(station)
-      expect(oystercard.entry_station).to eq station
-    end
-
-    it 'adds entry station to the journey history' do
-      oystercard.top_up(1)
-      oystercard.touch_in('Brixton')
-      expect(oystercard.journey_history).to eq [{:entry_station => 'Brixton'}]
-    end
   end
 
   describe '#touch_out' do
-    it 'sets users in journey status to false' do
-      oystercard.top_up(1)
-      oystercard.touch_in(station)
-      oystercard.touch_out(station)
-      expect(oystercard).not_to be_in_journey
+    context 'user has topped up above minimum fare' do
+      it 'sets users in journey status to false' do
+        oystercard.top_up(1)
+        oystercard.touch_in(station)
+        oystercard.touch_out(station)
+        expect(oystercard).not_to be_in_journey
+      end
+
+      it 'resets the entry station to nil' do
+        oystercard.top_up(5)
+        oystercard.touch_in(station)
+        oystercard.touch_out(station)
+        expect(oystercard.entry_station).to eq nil
+      end
+
+      it 'adds exit station to journey history' do
+        oystercard.top_up(5)
+        oystercard.touch_in('Brixton')
+        oystercard.touch_out('Oxford Circus')
+        expect(oystercard.journey_history).to eq [{:entry_station => 'Brixton'}, {:exit_station => 'Oxford Circus'}]
+      end
     end
 
-    it 'deducts the minmum fare from the users balance' do
-      expect { oystercard.touch_out(station) }.to change{ oystercard.balance}.by -oystercard.min_fare
-    end
-
-    it 'resets the entry station to nil' do
-      oystercard.top_up(5)
-      oystercard.touch_in(station)
-      oystercard.touch_out(station)
-      expect(oystercard.entry_station).to eq nil
-    end
-
-    it 'adds exit station to journey history' do
-      oystercard.top_up(5)
-      oystercard.touch_in('Brixton')
-      oystercard.touch_out('Oxford Circus')
-      expect(oystercard.journey_history).to eq [{:entry_station => 'Brixton'}, {:exit_station => 'Oxford Circus'}]
+    context 'user has not topped up' do
+      it 'deducts the minmum fare from the users balance' do
+        expect { oystercard.touch_out(station) }.to change{ oystercard.balance}.by -oystercard.min_fare
+      end
     end
   end
 
