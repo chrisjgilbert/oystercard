@@ -39,32 +39,8 @@ describe OysterCard do
     end
   end
 
-  describe '#in_journey?' do
-    it 'it is initially not in journey' do
-      expect(oystercard).not_to be_in_journey
-    end
-
-    it 'returns true when there an entry station has been set' do
-      oystercard.top_up(5)
-      oystercard.touch_in(station)
-      expect(oystercard).to be_in_journey
-    end
-  end
-
   describe '#touch_in' do
     context 'user has topped up above minimum fare' do
-      it 'sets users in journey status to true' do
-        oystercard.top_up(1)
-        oystercard.touch_in(station)
-        expect(oystercard).to be_in_journey
-      end
-
-      it 'remembers the entry station' do
-        oystercard.top_up(1)
-        oystercard.touch_in(station)
-        expect(oystercard.entry_station).to eq station
-      end
-
       it 'adds entry station to the journey history' do
         oystercard.top_up(1)
         oystercard.touch_in(entry_station)
@@ -83,20 +59,6 @@ describe OysterCard do
 
   describe '#touch_out' do
     context 'user has topped up above minimum fare' do
-      it 'sets users in journey status to false' do
-        oystercard.top_up(1)
-        oystercard.touch_in(station)
-        oystercard.touch_out(station)
-        expect(oystercard).not_to be_in_journey
-      end
-
-      it 'resets the entry station to nil' do
-        oystercard.top_up(5)
-        oystercard.touch_in(station)
-        oystercard.touch_out(station)
-        expect(oystercard.entry_station).to eq nil
-      end
-
       it 'adds exit station to journey history' do
         oystercard.top_up(5)
         oystercard.touch_in(entry_station)
