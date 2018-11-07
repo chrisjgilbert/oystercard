@@ -24,6 +24,7 @@ class OysterCard
 
   def touch_in(entry_station)
     @entry_station = entry_station unless insufficient_funds?
+    @station_history = [:touch_in_station => entry_station]
   end
 
   def touch_out

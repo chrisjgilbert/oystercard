@@ -15,7 +15,7 @@ describe OysterCard do
     end
 
     it 'has an empty journey history' do
-      expect(oystercard.station_history).to eq []
+      expect(oystercard.station_history).to be_empty
     end
 
   end
@@ -63,7 +63,14 @@ describe OysterCard do
 
     it 'remembers the entry station' do
       oystercard.top_up(1)
-      expect(oystercard.touch_in(station)).to eq station
+      oystercard.touch_in(station)
+      expect(oystercard.entry_station).to eq station
+    end
+
+    it 'adds entry station to the station history' do
+      oystercard.top_up(1)
+      oystercard.touch_in('Brixton')
+      expect(oystercard.station_history).to eq [{:touch_in_station => 'Brixton'}]
     end
   end
 
