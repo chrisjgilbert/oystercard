@@ -15,7 +15,7 @@ describe OysterCard do
     end
 
     it 'has an empty journey history' do
-      expect(oystercard.station_history).to be_empty
+      expect(oystercard.journey_history).to be_empty
     end
 
   end
@@ -67,10 +67,10 @@ describe OysterCard do
       expect(oystercard.entry_station).to eq station
     end
 
-    it 'adds entry station to the station history' do
+    it 'adds entry station to the journey history' do
       oystercard.top_up(1)
       oystercard.touch_in('Brixton')
-      expect(oystercard.station_history).to eq [{:touch_in_station => 'Brixton'}]
+      expect(oystercard.journey_history).to eq [{:touch_in_station => 'Brixton'}]
     end
   end
 
@@ -78,19 +78,26 @@ describe OysterCard do
     it 'sets users in journey status to false' do
       oystercard.top_up(1)
       oystercard.touch_in(station)
-      oystercard.touch_out
+      oystercard.touch_out(station)
       expect(oystercard).not_to be_in_journey
     end
 
     it 'deducts the minmum fare from the users balance' do
-      expect { oystercard.touch_out }.to change{ oystercard.balance}.by -oystercard.min_fare
+      expect { oystercard.touch_out(station) }.to change{ oystercard.balance}.by -oystercard.min_fare
     end
 
     it 'resets the entry station to nil' do
       oystercard.top_up(5)
       oystercard.touch_in(station)
-      oystercard.touch_out
+      oystercard.touch_out(station)
       expect(oystercard.entry_station).to eq nil
+    end
+
+    it 'adds exit station to journey history' do
+      oystercard.top_up(5)
+      oystercard.touch_in('Brixton')
+      oystercard.touch_out('Oxford Circus')
+      expect(oystercard.journey_history).to eq [{:touch_in_station => 'Brixton'}, {:touch_out_station => 'Oxford Circus'}]
     end
   end
 
