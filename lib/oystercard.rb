@@ -18,7 +18,7 @@ class OysterCard
   end
 
   def in_journey?
-    @in_journey
+    @entry_station != nil
   end
 
   def touch_in(entry_station)
